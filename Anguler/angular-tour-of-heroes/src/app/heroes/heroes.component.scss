@@ -1,0 +1,302 @@
+// Variables
+$primary-color: #4f46e5;
+$primary-light: #6366f1;
+$primary-dark: #3730a3;
+$text-primary: #111827;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$success-color: #10b981;
+$background-light: #f8fafc;
+
+.heroes-container {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    max-width: 100%;
+  }
+}
+
+.hero-form {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  
+  // Decorative gradient overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color, $primary-light, #8b5cf6, #ec4899);
+    border-radius: 16px 16px 0 0;
+  }
+  
+  h2 {
+    color: $primary-color;
+    margin-bottom: 2rem;
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    
+    &::after {
+      content: '⚡';
+      margin-left: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &::before {
+      content: '🦸‍♂️';
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid $border-color;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 
+      0 0 0 3px rgba($primary-color, 0.1),
+      0 4px 12px rgba($primary-color, 0.15);
+    transform: translateY(-1px);
+    background: white;
+  }
+  
+  &:hover {
+    border-color: lighten($primary-color, 20%);
+  }
+  
+  &::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+  }
+  
+  // Input focus animation
+  &:focus + .input-highlight {
+    width: 100%;
+  }
+}
+
+// Optional: Input highlight effect
+.input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, $primary-color, $primary-light);
+  transition: width 0.3s ease;
+}
+
+.hero-display {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  border-left: 5px solid $primary-color;
+  box-shadow: 0 2px 8px rgba($primary-color, 0.1);
+  position: relative;
+  overflow: hidden;
+  animation: slideInUp 0.5s ease-out;
+  
+  // Decorative background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba($primary-color, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  h3 {
+    color: $primary-dark;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    &::before {
+      content: '🌟';
+      font-size: 1.5rem;
+    }
+  }
+  
+  // Success animation when hero is created
+  &.hero-created {
+    animation: successPulse 0.6s ease-out;
+    border-left-color: $success-color;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    
+    h3 {
+      color: darken($success-color, 20%);
+    }
+  }
+}
+
+// Additional enhancement: Superpower display
+.superpower-display {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba($primary-color, 0.05);
+  border-radius: 8px;
+  border: 1px dashed $primary-color;
+  
+  .superpower-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .superpower-value {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: $primary-dark;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    &::before {
+      content: '💫';
+    }
+  }
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba($success-color, 0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba($success-color, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba($success-color, 0.1);
+  }
+}
+
+// Responsive improvements
+@media (max-width: 480px) {
+  .heroes-container {
+    padding: 0.5rem;
+  }
+  
+  .hero-form {
+    padding: 1.25rem;
+    margin: 0.5rem;
+  }
+  
+  .form-input {
+    padding: 14px 16px;
+    font-size: 16px; // Prevents zoom on iOS
+  }
+  
+  .hero-display {
+    padding: 1.25rem;
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .hero-form {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-color: #374151;
+    
+    h2 {
+      color: #a5b4fc;
+    }
+  }
+  
+  .form-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+    
+    &::placeholder {
+      color: #9ca3af;
+    }
+    
+    &:focus {
+      border-color: #a5b4fc;
+      background: #4b5563;
+    }
+  }
+  
+  .hero-display {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    border-left-color: #a5b4fc;
+    
+    h3 {
+      color: #dbeafe;
+    }
+  }
+}

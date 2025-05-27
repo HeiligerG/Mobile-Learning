@@ -1,0 +1,27 @@
+<div class="heroes-container">
+  <div class="hero-form">
+    <h2>Hero Management</h2>
+    <div class="form-group">
+      <label for="name">Hero Name:</label>
+      <input 
+        id="name" 
+        [(ngModel)]="hero.name" 
+        placeholder="Enter hero name"
+        class="form-input"
+      >
+    </div>
+    <div class="hero-superpower" [(ngModel)]="hero.superpower">
+      <h4>Superpower:</h4>
+      <div class="hero-superpower-display"></div>
+        <input 
+            id="superpower" 
+            [(ngModel)]="hero.superpower" 
+            placeholder="Enter hero's superpower"
+            class="form-input"
+        >
+    </div>
+    <div class="hero-display" *ngIf="hero.name">
+      <h3>Current Hero: {{hero.name}}</h3>
+    </div>
+  </div>
+</div>
