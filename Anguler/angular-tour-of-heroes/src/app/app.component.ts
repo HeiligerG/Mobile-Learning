@@ -48,7 +48,7 @@ export class AppComponent {
       name: 'Detail Hero Component',
       selector: 'app-hero-detail',
       description: 'Zeigt detailierte Ansicht an',
-      status: 'completed',
+      status: 'planned',
       isDisplayed: false,
       createdAt: new Date('2025-01-15T10:30:00')
     },
