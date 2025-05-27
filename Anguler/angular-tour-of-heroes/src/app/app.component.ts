@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { InfoComponent } from './info/info.component';
 import { MessagesComponent } from './messages/messages.component';
-import { RouterOutlet } from '@angular/router';
 
 interface ComponentItem {
   id: number;
@@ -36,9 +36,9 @@ type FilterType = 'all' | 'planned' | 'inProgress' | 'completed';
 })
 export class AppComponent {
   
-  title = 'Angular Component Manager';
+  readonly title = 'Angular Component Manager';
   
-  components: ComponentItem[] = [
+  components = signal<ComponentItem[]>([
     {
       id: 1,
       name: 'Heroes Component',
@@ -53,45 +53,70 @@ export class AppComponent {
       name: 'Detail Hero Component',
       selector: 'app-hero-detail',
       description: 'Zeigt detailierte Ansicht an',
-      status: 'planned',
+      status: 'completed',
       isDisplayed: false,
       createdAt: new Date('2025-01-15T10:30:00')
     },
-  ];
+  ]);
 
-  currentFilter: FilterType = 'all';
-  newComponentName = '';
+  currentFilter = signal<FilterType>('all');
+  newComponentName = signal('');
   
-  private nextId = 5;
+  private nextId = signal(3);
 
-  // Component Management
-  toggleComponentDisplay(component: ComponentItem): void {
-    // Schließe alle anderen Components
-    this.components.forEach(c => {
-      if (c.id !== component.id) {
-        c.isDisplayed = false;
-      }
-    });
+  filteredComponents = computed(() => {
+    const filter = this.currentFilter();
+    const allComponents = this.components();
     
-    // Toggle das ausgewählte Component
-    component.isDisplayed = !component.isDisplayed;
+    if (filter === 'all') {
+      return allComponents;
+    }
+    return allComponents.filter(component => component.status === filter);
+  });
+
+  completedCount = computed(() => 
+    this.components().filter(c => c.status === 'completed').length
+  );
+
+  inProgressCount = computed(() => 
+    this.components().filter(c => c.status === 'inProgress').length
+  );
+
+  plannedCount = computed(() => 
+    this.components().filter(c => c.status === 'planned').length
+  );
+
+  toggleComponentDisplay(component: ComponentItem): void {
+    this.components.update(components => 
+      components.map(c => ({
+        ...c,
+        isDisplayed: c.id === component.id ? !c.isDisplayed : false
+      }))
+    );
   }
 
   cycleStatus(component: ComponentItem): void {
     const statusOrder: ComponentItem['status'][] = ['planned', 'inProgress', 'completed'];
     const currentIndex = statusOrder.indexOf(component.status);
     const nextIndex = (currentIndex + 1) % statusOrder.length;
-    component.status = statusOrder[nextIndex];
+    
+    this.components.update(components =>
+      components.map(c => 
+        c.id === component.id 
+          ? { ...c, status: statusOrder[nextIndex] }
+          : c
+      )
+    );
   }
 
   addQuickComponent(): void {
-    if (!this.newComponentName.trim()) return;
+    const name = this.newComponentName().trim();
+    if (!name) return;
 
-    const name = this.newComponentName.trim();
     const selector = `app-${name.toLowerCase().replace(/\s+/g, '-')}`;
     
     const newComponent: ComponentItem = {
-      id: this.nextId++,
+      id: this.nextId(),
       name: `${name} Component`,
       selector: selector,
       description: `${name} Component - Beschreibung hinzufügen`,
@@ -100,55 +125,34 @@ export class AppComponent {
       createdAt: new Date()
     };
 
-    this.components.unshift(newComponent);
-    this.newComponentName = '';
+    this.components.update(components => [newComponent, ...components]);
+    this.nextId.update(id => id + 1);
+    this.newComponentName.set('');
   }
 
-  // Filtering
   setFilter(filter: FilterType): void {
-    this.currentFilter = filter;
+    this.currentFilter.set(filter);
   }
 
-  getFilteredComponents(): ComponentItem[] {
-    if (this.currentFilter === 'all') {
-      return this.components;
-    }
-    return this.components.filter(component => component.status === this.currentFilter);
-  }
-
-  // Statistics
-  getCompletedCount(): number {
-    return this.components.filter(c => c.status === 'completed').length;
-  }
-
-  getInProgressCount(): number {
-    return this.components.filter(c => c.status === 'inProgress').length;
-  }
-
-  getPlannedCount(): number {
-    return this.components.filter(c => c.status === 'planned').length;
-  }
-
-  // Utilities
   trackByComponentId(index: number, component: ComponentItem): number {
     return component.id;
   }
 
   getStatusLabel(status: string): string {
-    switch (status) {
-      case 'completed': return 'Fertig';
-      case 'inProgress': return 'In Arbeit';
-      case 'planned': return 'Geplant';
-      default: return status;
-    }
+    const labels = {
+      'completed': 'Fertig',
+      'inProgress': 'In Arbeit',
+      'planned': 'Geplant'
+    };
+    return labels[status as keyof typeof labels] || status;
   }
 
   isComponentImplemented(selector: string): boolean {
-    // Hier definierst du, welche Components bereits implementiert sind
     const implementedComponents = [
       'app-heroes',
-      // 'app-hero-detail',
-      // Füge hier weitere implementierte Components hinzu
+      'app-hero-detail',
+      'app-messages',
+      'app-info'
     ];
     
     return implementedComponents.includes(selector);
