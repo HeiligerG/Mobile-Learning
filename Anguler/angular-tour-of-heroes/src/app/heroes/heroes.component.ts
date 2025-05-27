@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {  } from '@angular/core';
 import { Hero } from '../hero';
 import { FormsModule } from '@angular/forms';
+import { HEROES } from '../mock-heroes';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-heroes',
@@ -10,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     FormsModule,
+    UpperCasePipe,
   ],
 })
 
@@ -19,4 +22,11 @@ export class HeroesComponent {
     name: 'Windstorm',
     superpower: 'Flying',
   };
+  heroes = HEROES;
+
+  selectedHero?: Hero;
+
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+}
 }

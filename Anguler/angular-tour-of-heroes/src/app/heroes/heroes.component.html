@@ -24,4 +24,25 @@
       <h3>Current Hero: {{hero.name}}</h3>
     </div>
   </div>
+  <h2>My Heroes</h2>
+    <ul class="heroes">
+    @for (hero of heroes; track hero.id) {
+    <li>
+        <button class="btn btn-primary" type="button" (click)="onSelect(hero)">
+        <span class="badge">{{hero.id}}</span>
+        <span class="name">{{hero.name}}</span>
+        </button>
+    </li>
+}
+    </ul>
+    @if (selectedHero) {
+  <div>
+    <h2>{{selectedHero.name | uppercase}} Details</h2>
+    <div>id: {{selectedHero.id}}</div>
+    <div>
+      <label for="hero-name">Hero name: </label>
+      <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
+    </div>
+  </div>
+}
 </div>
