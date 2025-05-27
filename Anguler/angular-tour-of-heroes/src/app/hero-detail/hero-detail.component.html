@@ -1,10 +1,23 @@
 @if (hero(); as hero) {
   <div class="hero-detail">
-    <h2>{{hero.name | uppercase}} Details</h2>
-    <div><span>id: </span>{{hero.id}}</div>
-    <div>
-      <label for="hero-name">Hero name: </label>
-      <input id="hero-name" [(ngModel)]="hero.name" placeholder="name">
+    <h2>{{heroName()}} Details</h2>
+    <div class="hero-id">
+      <span>ID:</span>
+      <span class="id-value">{{hero.id}}</span>
     </div>
+    <div class="hero-form">
+      <label for="hero-name">Hero Name:</label>
+      <input 
+        id="hero-name" 
+        [(ngModel)]="hero.name" 
+        placeholder="Enter hero name"
+        class="form-input"
+        (input)="onHeroNameChange($event.target.value)"
+      >
+    </div>
+  </div>
+} @else {
+  <div class="no-hero">
+    <p>Select a hero to view details</p>
   </div>
 }
