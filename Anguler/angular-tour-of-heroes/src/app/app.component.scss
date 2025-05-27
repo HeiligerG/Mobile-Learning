@@ -59,6 +59,11 @@
       background: var(--gray-100);
       color: var(--primary-600);
     }
+    &.active {
+    background: var(--primary-100);
+    color: var(--primary-600);
+    font-weight: var(--font-semibold);
+    }
   }
 }
 

@@ -5,144 +5,142 @@
         <h1>{{title}}</h1>
       </div>
       <div class="nav-actions">
-        <a routerLink="/info">Info</a>
-        <router-outlet></router-outlet>
+        <a routerLink="/" routerLinkActive="active">Home</a>
+        <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+        <a routerLink="/info" routerLinkActive="active">Info</a>
         <span class="component-counter">{{components().length}} Components</span>
       </div>
     </nav>
   </header>
 
   <main class="main">
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">Meine Angular Components</h1>
-        <p class="hero-subtitle">Übersicht aller erstellten Components und deren Status</p>
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- TODO: Auslagerung in card component -->
+  <section class="components-section">
+    <div class="container">
+      <div class="filter-tabs">
+        <button 
+          class="filter-tab" 
+          [class.active]="currentFilter() === 'all'"
+          (click)="setFilter('all')"
+        >
+          Alle ({{components().length}})
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="currentFilter() === 'completed'"
+          (click)="setFilter('completed')"
+        >
+          Fertig ({{completedCount()}})
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="currentFilter() === 'inProgress'"
+          (click)="setFilter('inProgress')"
+        >
+          In Arbeit ({{inProgressCount()}})
+        </button>
+        <button 
+          class="filter-tab" 
+          [class.active]="currentFilter() === 'planned'"
+          (click)="setFilter('planned')"
+        >
+          Geplant ({{plannedCount()}})
+        </button>
       </div>
-    </section>
 
-    <section class="components-section">
-      <div class="container">
-        <div class="filter-tabs">
-          <button 
-            class="filter-tab" 
-            [class.active]="currentFilter() === 'all'"
-            (click)="setFilter('all')"
-          >
-            Alle ({{components().length}})
-          </button>
-          <button 
-            class="filter-tab" 
-            [class.active]="currentFilter() === 'completed'"
-            (click)="setFilter('completed')"
-          >
-            Fertig ({{completedCount()}})
-          </button>
-          <button 
-            class="filter-tab" 
-            [class.active]="currentFilter() === 'inProgress'"
-            (click)="setFilter('inProgress')"
-          >
-            In Arbeit ({{inProgressCount()}})
-          </button>
-          <button 
-            class="filter-tab" 
-            [class.active]="currentFilter() === 'planned'"
-            (click)="setFilter('planned')"
-          >
-            Geplant ({{plannedCount()}})
-          </button>
-        </div>
-
-        <div class="components-grid">
-          <div 
-            class="component-card" 
-            *ngFor="let component of filteredComponents(); trackBy: trackByComponentId"
-            [class.status-completed]="component.status === 'completed'"
-            [class.status-inProgress]="component.status === 'inProgress'"
-            [class.status-planned]="component.status === 'planned'"
-          >
-            <div class="component-header">
-              <div class="component-status">
-                <span class="status-badge status-{{component.status}}">
-                  {{getStatusLabel(component.status)}}
-                </span>
-              </div>
-              <div class="component-actions">
-                <button 
-                  class="action-btn toggle" 
-                  (click)="$event.stopPropagation(); toggleComponentDisplay(component)"
-                  [title]="component.isDisplayed ? 'Ausblenden' : 'Anzeigen'"
-                >
-                  {{component.isDisplayed ? '👁️' : '👀'}}
-                </button>
-                <button 
-                  class="action-btn status" 
-                  (click)="$event.stopPropagation(); cycleStatus(component)"
-                  title="Status ändern"
-                >
-                  🔄
-                </button>
-              </div>
+      <div class="components-grid">
+        <div 
+          class="component-card" 
+          *ngFor="let component of filteredComponents(); trackBy: trackByComponentId"
+          [class.status-completed]="component.status === 'completed'"
+          [class.status-inProgress]="component.status === 'inProgress'"
+          [class.status-planned]="component.status === 'planned'"
+        >
+          <div class="component-header">
+            <div class="component-status">
+              <span class="status-badge status-{{component.status}}">
+                {{getStatusLabel(component.status)}}
+              </span>
             </div>
-            
-            <div class="component-content">
-              <h3 class="component-title">{{component.name}}</h3>
-              <p class="component-description">{{component.description}}</p>
-              <div class="component-meta">
-                <span class="component-selector">&lt;{{component.selector}}&gt;</span>
-                <span class="component-date">{{component.createdAt | date:'dd.MM.yyyy'}}</span>
-              </div>
-            </div>
-
-            <div class="component-preview" *ngIf="component.isDisplayed">
-              <div class="preview-header">
-                <h4>Live Preview:</h4>
-                <button 
-                  class="btn-small btn-secondary" 
-                  (click)="$event.stopPropagation(); toggleComponentDisplay(component)"
-                >
-                  Schließen
-                </button>
-              </div>
-              <div class="preview-content">
-                <app-heroes *ngIf="component.selector === 'app-heroes'"></app-heroes>
-                
-                <div class="component-placeholder" *ngIf="!isComponentImplemented(component.selector)">
-                  <div class="placeholder-icon">🚧</div>
-                  <h4>{{component.name}}</h4>
-                  <p>Component noch nicht implementiert</p>
-                  <code>&lt;{{component.selector}}&gt;&lt;/{{component.selector}}&gt;</code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="quick-add-section">
-          <div class="quick-add-card">
-            <h3>Neues Component hinzufügen</h3>
-            <div class="quick-add-form">
-              <input 
-                type="text" 
-                [(ngModel)]="newComponentName"
-                placeholder="Component Name (z.B. UserList)"
-                class="form-input"
-                (keyup.enter)="addQuickComponent()"
-              >
+            <div class="component-actions">
               <button 
-                class="btn btn-primary" 
-                (click)="addQuickComponent()"
-                [disabled]="!newComponentName().trim()"
+                class="action-btn toggle" 
+                (click)="$event.stopPropagation(); toggleComponentDisplay(component)"
+                [title]="component.isDisplayed ? 'Ausblenden' : 'Anzeigen'"
               >
-                Hinzufügen
+                {{component.isDisplayed ? '👁️' : '👀'}}
+              </button>
+              <button 
+                class="action-btn status" 
+                (click)="$event.stopPropagation(); cycleStatus(component)"
+                title="Status ändern"
+              >
+                🔄
               </button>
             </div>
           </div>
+          
+          <div class="component-content">
+            <h3 class="component-title">{{component.name}}</h3>
+            <p class="component-description">{{component.description}}</p>
+            <div class="component-meta">
+              <span class="component-selector">&lt;{{component.selector}}&gt;</span>
+              <span class="component-date">{{component.createdAt | date:'dd.MM.yyyy'}}</span>
+            </div>
+          </div>
+
+          <div class="component-preview" *ngIf="component.isDisplayed">
+            <div class="preview-header">
+              <h4>Live Preview:</h4>
+              <button 
+                class="btn-small btn-secondary" 
+                (click)="$event.stopPropagation(); toggleComponentDisplay(component)"
+              >
+                Schließen
+              </button>
+            </div>
+            <div class="preview-content">
+              <app-heroes *ngIf="component.selector === 'app-heroes'"></app-heroes>
+              
+              <div class="component-placeholder" *ngIf="!isComponentImplemented(component.selector)">
+                <div class="placeholder-icon">🚧</div>
+                <h4>{{component.name}}</h4>
+                <p>Component noch nicht implementiert</p>
+                <code>&lt;{{component.selector}}&gt;&lt;/{{component.selector}}&gt;</code>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
-    <app-messages></app-messages>
-  </main>
+
+      <div class="quick-add-section">
+        <div class="quick-add-card">
+          <h3>Neues Component hinzufügen</h3>
+          <div class="quick-add-form">
+            <input 
+              type="text" 
+              [(ngModel)]="newComponentName"
+              placeholder="Component Name (z.B. UserList)"
+              class="form-input"
+              (keyup.enter)="addQuickComponent()"
+            >
+            <button 
+              class="btn btn-primary" 
+              (click)="addQuickComponent()"
+              [disabled]="!newComponentName().trim()"
+            >
+              Hinzufügen
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-messages></app-messages>
 
   <footer class="footer">
     <div class="container">

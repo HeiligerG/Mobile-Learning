@@ -1,7 +1,7 @@
 import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { RouterLinkActive, RouterOutlet, RouterLink } from '@angular/router';
 import { HeroesComponent } from './heroes/heroes.component';
 import { MessagesComponent } from './messages/messages.component';
 
@@ -22,6 +22,8 @@ type FilterType = 'all' | 'planned' | 'inProgress' | 'completed';
   standalone: true,
   imports: [
     RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     CommonModule, 
     FormsModule,
     HeroesComponent,

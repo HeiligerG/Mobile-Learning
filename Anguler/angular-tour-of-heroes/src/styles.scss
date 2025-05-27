@@ -3,6 +3,23 @@
 // Import variables and mixins (modern Sass syntax)
 @use 'styles/variables' as *;
 
+// NOTFALL CSS RESET - Füge das GANZ OBEN in src/styles.scss hinzu
+
+/* EMERGENCY FIX - Links wieder klickbar machen */
+* {
+  pointer-events: auto !important;
+}
+
+a, button {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+
+
+
 // Global reset and base styles
 * {
   box-sizing: border-box;
