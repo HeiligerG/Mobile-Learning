@@ -4,6 +4,8 @@ import { Hero } from '../hero';
 import { FormsModule } from '@angular/forms';
 import { HEROES } from '../mock-heroes';
 import { UpperCasePipe } from '@angular/common';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-heroes',
@@ -11,8 +13,10 @@ import { UpperCasePipe } from '@angular/common';
   styleUrls: ['./heroes.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     UpperCasePipe,
+    HeroDetailComponent,
   ],
 })
 

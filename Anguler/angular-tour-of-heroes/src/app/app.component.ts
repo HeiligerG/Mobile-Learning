@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { HeroesComponent } from './heroes/heroes.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 interface ComponentItem {
   id: number;
@@ -23,6 +24,7 @@ type FilterType = 'all' | 'planned' | 'inProgress' | 'completed';
     CommonModule, 
     FormsModule,
     HeroesComponent,
+    HeroDetailComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -37,6 +39,15 @@ export class AppComponent {
       name: 'Heroes Component',
       selector: 'app-heroes',
       description: 'Zeigt eine Liste von Helden an mit CRUD-Funktionalität',
+      status: 'completed',
+      isDisplayed: false,
+      createdAt: new Date('2025-01-15T10:30:00')
+    },
+    {
+      id: 2,
+      name: 'Detail Hero Component',
+      selector: 'app-hero-detail',
+      description: 'Zeigt detailierte Ansicht an',
       status: 'completed',
       isDisplayed: false,
       createdAt: new Date('2025-01-15T10:30:00')
@@ -131,6 +142,7 @@ export class AppComponent {
     // Hier definierst du, welche Components bereits implementiert sind
     const implementedComponents = [
       'app-heroes',
+      // 'app-hero-detail',
       // Füge hier weitere implementierte Components hinzu
     ];
     

@@ -10,15 +10,14 @@
         class="form-input"
       >
     </div>
-    <div class="hero-superpower" [(ngModel)]="hero.superpower">
+    <div class="hero-superpower">
       <h4>Superpower:</h4>
-      <div class="hero-superpower-display"></div>
-        <input 
-            id="superpower" 
-            [(ngModel)]="hero.superpower" 
-            placeholder="Enter hero's superpower"
-            class="form-input"
-        >
+      <input 
+        id="superpower" 
+        [(ngModel)]="hero.superpower" 
+        placeholder="Enter hero's superpower"
+        class="form-input"
+      >
     </div>
     <div class="hero-display" *ngIf="hero.name">
       <h3>Current Hero: {{hero.name}}</h3>
@@ -35,14 +34,5 @@
     </li>
 }
     </ul>
-    @if (selectedHero) {
-  <div>
-    <h2>{{selectedHero.name | uppercase}} Details</h2>
-    <div>id: {{selectedHero.id}}</div>
-    <div>
-      <label for="hero-name">Hero name: </label>
-      <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
-    </div>
-  </div>
-}
+    <app-hero-detail [hero]="selectedHero" />
 </div>

@@ -1,0 +1,324 @@
+// Variables
+$primary-color: #4f46e5;
+$primary-light: #6366f1;
+$primary-dark: #3730a3;
+$text-primary: #111827;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$success-color: #10b981;
+$background-light: #f8fafc;
+
+// Hero Detail Container
+.hero-detail {
+  background: linear-gradient(135deg, white 0%, #f8fafc 100%);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid $border-color;
+  position: relative;
+  overflow: hidden;
+  animation: slideInUp 0.4s ease-out;
+  max-width: 600px;
+  margin: 2rem auto;
+  
+  // Decorative top border
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, $success-color, #34d399, #10b981);
+    border-radius: 20px 20px 0 0;
+  }
+  
+  // Subtle background pattern
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba($primary-color, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    margin: 0.5rem;
+  }
+}
+
+// Hero Title
+.hero-detail h2 {
+  color: $primary-dark;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  
+  &::before {
+    content: '⭐ ';
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+  }
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, $primary-color, $primary-light);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+}
+
+// Hero ID Display
+.hero-detail > div:first-of-type {
+  background: linear-gradient(135deg, rgba($primary-color, 0.08) 0%, rgba($primary-color, 0.05) 100%);
+  padding: 1.25rem 1.75rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border-left: 4px solid $primary-color;
+  position: relative;
+  
+  span {
+    font-weight: 700;
+    color: $primary-dark;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.875rem;
+    
+    &::before {
+      content: '🆔 ';
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+  }
+  
+  // ID value styling
+  &::after {
+    content: attr(data-id);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-left: 0.5rem;
+  }
+  
+  // Make the ID number stand out
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $text-primary;
+  
+  @media (max-width: 768px) {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// Form Section
+.hero-detail > div:last-of-type {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 2px solid rgba($primary-color, 0.1);
+  backdrop-filter: blur(10px);
+  
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &::before {
+      content: '✏️ ';
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid $border-color;
+    border-radius: 12px;
+    font-size: 1.125rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+    box-sizing: border-box;
+    
+    &:focus {
+      outline: none;
+      border-color: $success-color;
+      box-shadow: 
+        0 0 0 3px rgba($success-color, 0.1),
+        0 4px 12px rgba($success-color, 0.15);
+      transform: translateY(-1px);
+      background: #fdfdfd;
+    }
+    
+    &:hover {
+      border-color: lighten($success-color, 10%);
+    }
+    
+    &::placeholder {
+      color: #9ca3af;
+      font-style: italic;
+    }
+    
+    // Add a subtle glow effect
+    &:focus + .input-glow {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    
+    input {
+      padding: 14px 16px;
+      font-size: 16px; // Prevents zoom on iOS
+    }
+  }
+}
+
+// Optional: Input glow effect
+.input-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, $success-color, $primary-color);
+  border-radius: 14px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Pulse animation for the hero ID
+@keyframes idPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba($primary-color, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba($primary-color, 0);
+  }
+}
+
+.hero-detail > div:first-of-type {
+  animation: idPulse 2s infinite;
+}
+
+// Success state when hero name is updated
+.hero-detail.updated {
+  .hero-detail > div:last-of-type input {
+    border-color: $success-color;
+    box-shadow: 0 0 0 3px rgba($success-color, 0.2);
+    animation: successFlash 0.6s ease-out;
+  }
+}
+
+@keyframes successFlash {
+  0% {
+    background: white;
+  }
+  50% {
+    background: rgba($success-color, 0.1);
+  }
+  100% {
+    background: white;
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .hero-detail {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-color: #374151;
+    color: white;
+    
+    h2 {
+      color: #a5b4fc;
+    }
+    
+    > div:first-of-type {
+      background: linear-gradient(135deg, rgba(#a5b4fc, 0.1) 0%, rgba(#a5b4fc, 0.05) 100%);
+      border-left-color: #a5b4fc;
+      color: #e5e7eb;
+      
+      span {
+        color: #a5b4fc;
+      }
+    }
+    
+    > div:last-of-type {
+      background: rgba(#374151, 0.5);
+      border-color: rgba(#a5b4fc, 0.2);
+      
+      label {
+        color: #e5e7eb;
+      }
+      
+      input {
+        background: #374151;
+        border-color: #4b5563;
+        color: white;
+        
+        &:focus {
+          border-color: #34d399;
+          background: #4b5563;
+        }
+        
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+    }
+  }
+}
