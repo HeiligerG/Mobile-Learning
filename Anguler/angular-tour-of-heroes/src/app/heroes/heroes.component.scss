@@ -1,40 +1,23 @@
-// Variables
-$primary-color: #4f46e5;
-$primary-light: #6366f1;
-$primary-dark: #3730a3;
-$text-primary: #111827;
-$text-secondary: #6b7280;
-$border-color: #e5e7eb;
-$success-color: #10b981;
-$background-light: #f8fafc;
+@use '../../styles/variables' as *;
 
+// Heroes Component Styles
 .heroes-container {
-  padding: 2rem;
-  max-width: 1000px;
+  padding: var(--space-xl);
+  max-width: 1200px;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  
-  @media (max-width: 768px) {
-    padding: 1rem;
-    gap: 2rem;
-  }
+  gap: var(--space-2xl);
 }
 
 // Hero Form Section
 .hero-form {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.1),
-    0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  @include card-base;
+  padding: var(--space-2xl);
   position: relative;
   overflow: hidden;
   
+  // Decorative gradient border
   &::before {
     content: '';
     position: absolute;
@@ -42,112 +25,86 @@ $background-light: #f8fafc;
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, $primary-color, $primary-light, #8b5cf6, #ec4899);
-    border-radius: 20px 20px 0 0;
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-600), #8b5cf6, #ec4899);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
   
   h2 {
-    color: $primary-color;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    font-weight: 700;
+    color: var(--primary-500);
+    margin-bottom: var(--space-xl);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
     text-align: center;
-    position: relative;
     
     &::after {
       content: '⚡';
-      margin-left: 0.5rem;
-      font-size: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-    
-    h2 {
-      font-size: 1.5rem;
+      margin-left: var(--space-sm);
+      font-size: var(--text-xl);
     }
   }
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-lg);
   
   label {
     display: block;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    color: $text-primary;
-    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-semibold);
+    color: var(--gray-900);
+    font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     
     &::before {
       content: '🦸‍♂️';
-      margin-right: 0.5rem;
+      margin-right: var(--space-xs);
     }
   }
 }
 
 .hero-superpower {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-lg);
   
   h4 {
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    color: $text-primary;
-    font-size: 0.9rem;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-semibold);
+    color: var(--gray-900);
+    font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     
     &::before {
       content: '💫';
-      margin-right: 0.5rem;
+      margin-right: var(--space-xs);
     }
   }
 }
 
 .form-input {
-  width: 100%;
-  padding: 16px 20px;
-  border: 2px solid $border-color;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.8);
-  box-sizing: border-box;
+  @include form-input;
+  background: rgb(255 255 255 / 0.8);
   
   &:focus {
-    outline: none;
-    border-color: $primary-color;
-    box-shadow: 
-      0 0 0 3px rgba($primary-color, 0.1),
-      0 4px 12px rgba($primary-color, 0.15);
-    transform: translateY(-1px);
     background: white;
+    transform: translateY(-1px);
   }
   
   &:hover {
-    border-color: lighten($primary-color, 20%);
-  }
-  
-  &::placeholder {
-    color: #9ca3af;
-    font-style: italic;
+    border-color: rgb(59 130 246 / 0.5);
   }
 }
 
 .hero-display {
-  margin-top: 2rem;
-  padding: 1.5rem;
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border-radius: 12px;
-  border-left: 5px solid $primary-color;
-  box-shadow: 0 2px 8px rgba($primary-color, 0.1);
+  border-radius: var(--radius-lg);
+  border-left: 5px solid var(--primary-500);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
-  animation: slideInUp 0.5s ease-out;
+  animation: slideInUp var(--transition-slow);
   
   &::before {
     content: '';
@@ -156,38 +113,56 @@ $background-light: #f8fafc;
     right: -50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba($primary-color, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgb(59 130 246 / 0.05) 0%, transparent 70%);
     pointer-events: none;
   }
   
   h3 {
-    color: $primary-dark;
+    color: var(--primary-700);
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-sm);
     
     &::before {
       content: '🌟';
-      font-size: 1.5rem;
+      font-size: var(--text-xl);
     }
+  }
+}
+
+.add-hero-btn {
+  @include button-base;
+  background: linear-gradient(135deg, var(--success-500), var(--success-600));
+  color: white;
+  margin-top: var(--space-md);
+  font-size: var(--text-base);
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--success-600), #047857);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  &::before {
+    content: '➕ ';
+    margin-right: var(--space-xs);
   }
 }
 
 // Heroes List Section
 .heroes-container > h2 {
-  color: $primary-color;
-  font-size: 2.25rem;
-  font-weight: 700;
+  color: var(--primary-500);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
   text-align: center;
   margin: 0;
-  position: relative;
   
   &::before {
     content: '🦸‍♂️ ';
-    margin-right: 0.5rem;
+    margin-right: var(--space-sm);
   }
   
   &::after {
@@ -195,9 +170,34 @@ $background-light: #f8fafc;
     display: block;
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, $primary-color, $primary-light);
-    margin: 1rem auto;
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+    margin: var(--space-md) auto;
     border-radius: 2px;
+  }
+}
+
+.heroes-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  
+  .stat {
+    text-align: center;
+    
+    .stat-number {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--primary-600);
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
   }
 }
 
@@ -206,36 +206,27 @@ $background-light: #f8fafc;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.25rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
   
   li {
     display: block;
   }
   
-  .btn {
+  .hero-card {
+    @include button-base;
     width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 1.25rem 1.5rem;
-    border: 2px solid transparent;
-    border-radius: 16px;
+    padding: var(--space-lg);
     background: linear-gradient(135deg, white 0%, #fdfdfd 100%);
-    box-shadow: 
-      0 4px 6px rgba(0, 0, 0, 0.07),
-      0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    cursor: pointer;
-    font-family: inherit;
+    box-shadow: var(--shadow-md);
+    border: 2px solid transparent;
+    border-radius: var(--radius-xl);
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    transition: all var(--transition-normal);
     
+    // Shine effect
     &::before {
       content: '';
       position: absolute;
@@ -243,16 +234,14 @@ $background-light: #f8fafc;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba($primary-color, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgb(59 130 246 / 0.1), transparent);
       transition: left 0.5s ease;
     }
     
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 
-        0 12px 25px rgba($primary-color, 0.15),
-        0 6px 12px rgba(0, 0, 0, 0.1);
-      border-color: $primary-color;
+      box-shadow: var(--shadow-lg), 0 12px 25px rgb(59 130 246 / 0.15);
+      border-color: var(--primary-500);
       
       &::before {
         left: 100%;
@@ -260,7 +249,7 @@ $background-light: #f8fafc;
       
       .badge {
         transform: scale(1.1);
-        box-shadow: 0 4px 8px rgba($primary-color, 0.4);
+        box-shadow: 0 4px 8px rgb(59 130 246 / 0.4);
       }
     }
     
@@ -269,20 +258,18 @@ $background-light: #f8fafc;
     }
     
     &.selected {
-      background: linear-gradient(135deg, $primary-color, $primary-light);
+      background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
       color: white;
-      border-color: $primary-dark;
-      box-shadow: 
-        0 8px 25px rgba($primary-color, 0.3),
-        0 4px 10px rgba($primary-color, 0.2);
+      border-color: var(--primary-700);
+      box-shadow: var(--shadow-lg), 0 8px 25px rgb(59 130 246 / 0.3);
       
       .badge {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgb(255 255 255 / 0.2);
         color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgb(255 255 255 / 0.3);
       }
       
-      .name {
+      .hero-name {
         color: white;
       }
     }
@@ -290,121 +277,65 @@ $background-light: #f8fafc;
 }
 
 .badge {
-  background: linear-gradient(135deg, $primary-color, $primary-light);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
   color: white;
-  font-size: 0.875rem;
-  font-weight: 700;
-  padding: 0.5rem 0.875rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  padding: var(--space-xs) var(--space-sm);
   border-radius: 25px;
-  margin-right: 1.25rem;
+  margin-right: var(--space-md);
   min-width: 45px;
   text-align: center;
-  box-shadow: 0 3px 6px rgba($primary-color, 0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgb(59 130 246 / 0.3);
+  transition: all var(--transition-fast);
   border: 2px solid transparent;
 }
 
-.name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: $text-primary;
+.hero-name {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--gray-900);
   flex: 1;
-  transition: color 0.3s ease;
+  transition: color var(--transition-fast);
 }
 
-// Selected Hero Details
-.heroes-container > div:last-child {
-  background: linear-gradient(135deg, white 0%, #f8fafc 100%);
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.1),
-    0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid $border-color;
-  position: relative;
-  overflow: hidden;
-  animation: slideInUp 0.4s ease-out;
+// Empty state
+.no-heroes {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--gray-500);
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, $success-color, #34d399);
-    border-radius: 20px 20px 0 0;
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-lg);
+    opacity: 0.5;
   }
   
-  h2 {
-    color: $primary-dark;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-weight: 700;
-    
-    &::before {
-      content: '⭐ ';
-      margin-right: 0.5rem;
-    }
+  h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
   }
   
-  > div:first-of-type {
-    background: rgba($primary-color, 0.05);
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid $primary-color;
-    
-    font-size: 1rem;
-    color: $primary-dark;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    
-    &::before {
-      content: '🆔 ';
-      margin-right: 0.5rem;
-      font-size: 1.2rem;
-    }
+  p {
+    font-size: var(--text-base);
+    margin: 0;
   }
+}
+
+// Loading state
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-2xl);
   
-  > div:last-of-type {
-    label {
-      display: block;
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-      color: $text-primary;
-      font-size: 1rem;
-      
-      &::before {
-        content: '✏️ ';
-        margin-right: 0.5rem;
-      }
-    }
-    
-    input {
-      width: 100%;
-      padding: 16px 20px;
-      border: 2px solid $border-color;
-      border-radius: 12px;
-      font-size: 1.125rem;
-      font-family: inherit;
-      transition: all 0.3s ease;
-      background: white;
-      
-      &:focus {
-        outline: none;
-        border-color: $success-color;
-        box-shadow: 0 0 0 3px rgba($success-color, 0.1);
-        transform: translateY(-1px);
-      }
-      
-      &::placeholder {
-        color: #9ca3af;
-        font-style: italic;
-      }
-    }
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--gray-200);
+    border-top: 4px solid var(--primary-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
   }
 }
 
@@ -420,27 +351,61 @@ $background-light: #f8fafc;
   }
 }
 
-// Responsive
-@media (max-width: 480px) {
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
   .heroes-container {
-    padding: 0.75rem;
+    padding: var(--space-md);
+    gap: var(--space-xl);
   }
   
   .hero-form {
-    padding: 1.25rem;
+    padding: var(--space-lg);
+    
+    h2 {
+      font-size: var(--text-xl);
+    }
   }
   
-  .heroes .btn {
-    padding: 1rem 1.25rem;
+  .heroes {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  
+  .heroes-stats {
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .heroes-container {
+    padding: var(--space-sm);
+  }
+  
+  .hero-form {
+    padding: var(--space-md);
+  }
+  
+  .hero-card {
+    padding: var(--space-md);
   }
   
   .badge {
-    margin-right: 1rem;
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
+    margin-right: var(--space-sm);
+    padding: var(--space-xs);
+    font-size: var(--text-xs);
   }
   
-  .name {
-    font-size: 1.125rem;
+  .hero-name {
+    font-size: var(--text-lg);
+  }
+  
+  .heroes-stats {
+    flex-direction: column;
+    gap: var(--space-md);
   }
 }

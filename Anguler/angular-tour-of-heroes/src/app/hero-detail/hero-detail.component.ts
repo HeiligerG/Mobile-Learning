@@ -15,10 +15,11 @@ export class HeroDetailComponent {
   
   heroName = computed(() => this.hero()?.name?.toUpperCase() || '');
   
-  onHeroNameChange(newName: string): void {
+  onHeroNameChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
     const currentHero = this.hero();
-    if (currentHero) {
-      currentHero.name = newName;
+    if (currentHero && input) {
+      currentHero.name = input.value;
     }
   }
 }

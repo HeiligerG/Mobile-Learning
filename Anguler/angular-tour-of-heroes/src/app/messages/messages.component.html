@@ -1,11 +1,30 @@
-@if (messageService.messages.length) {
-  <div>
-    <h2>Messages</h2>
-    <button type="button" class="clear" (click)="messageService.clear()">
-      Clear messages
-    </button>
-    @for (message of messageService.messages; track message) {
-      <div>{{ message }}</div>
-    }
+@if (messageService.messages().length) {
+  <div class="messages-container">
+    <div class="messages-header">
+      <h3>System Messages</h3>
+      <button
+        type="button"
+        class="clear-btn"
+        (click)="messageService.clear()"
+        title="Clear all messages"
+      >
+        Clear All
+      </button>
+    </div>
+    <div class="messages-list">
+      @for (message of messageService.messages(); track message; let i = $index) {
+        <div class="message-item" [style.animation-delay]="i * 100 + 'ms'">
+          <span class="message-icon">📝</span>
+          <span class="message-text">{{ message }}</span>
+          <button
+            class="remove-btn"
+            (click)="messageService.remove(i)"
+            title="Remove this message"
+          >
+            ✕
+          </button>
+        </div>
+      }
+    </div>
   </div>
 }

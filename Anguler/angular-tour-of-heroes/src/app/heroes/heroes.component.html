@@ -1,38 +1,86 @@
 <div class="heroes-container">
   <div class="hero-form">
     <h2>Hero Management</h2>
+    
     <div class="form-group">
-      <label for="name">Hero Name:</label>
+      <label for="hero-name">Hero Name:</label>
       <input 
-        id="name" 
+        id="hero-name" 
         [(ngModel)]="hero.name" 
         placeholder="Enter hero name"
         class="form-input"
+        (keyup.enter)="addHero()"
       >
     </div>
+    
     <div class="hero-superpower">
       <h4>Superpower:</h4>
       <input 
-        id="superpower" 
+        id="hero-superpower" 
         [(ngModel)]="hero.superpower" 
         placeholder="Enter hero's superpower"
         class="form-input"
+        (keyup.enter)="addHero()"
       >
     </div>
-    <div class="hero-display" *ngIf="hero.name">
-      <h3>Current Hero: {{hero.name}}</h3>
-    </div>
+    
+    <button 
+      class="add-hero-btn" 
+      (click)="addHero()"
+      [disabled]="!hero.name.trim()"
+    >
+      Add Hero
+    </button>
+    
+    @if (hero.name) {
+      <div class="hero-display">
+        <h3>Preview: {{hero.name}}</h3>
+      </div>
+    }
   </div>
-  <h2>My Heroes</h2>
-    <ul class="heroes">
-    @for (hero of heroes; track hero.id) {
-    <li>
-        <button class="btn btn-primary" type="button" (click)="onSelect(hero)">
-        <span class="badge">{{hero.id}}</span>
-        <span class="name">{{hero.name}}</span>
-        </button>
-    </li>
-}
-    </ul>
-    <app-hero-detail [hero]="selectedHero" />
+
+  <div class="heroes-section">
+    <h2>My Heroes</h2>
+    
+    @if (hasHeroes()) {
+      <div class="heroes-stats">
+        <div class="stat">
+          <span class="stat-number">{{heroCount()}}</span>
+          <span class="stat-label">Total Heroes</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">{{selectedHero() ? '1' : '0'}}</span>
+          <span class="stat-label">Selected</span>
+        </div>
+      </div>
+    }
+    
+    @if (hasHeroes()) {
+      <ul class="heroes">
+        @for (hero of heroes(); track trackByHeroId($index, hero)) {
+          <li>
+            <button 
+              class="hero-card"
+              [class.selected]="isSelected(hero)"
+              type="button" 
+              (click)="onSelect(hero)"
+            >
+              <span class="badge">{{hero.id}}</span>
+              <span class="hero-name">{{hero.name}}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-heroes">
+        <div class="empty-icon">🦸‍♂️</div>
+        <h3>No Heroes Yet</h3>
+        <p>Add your first hero using the form above!</p>
+      </div>
+    }
+  </div>
+
+  @if (selectedHero(); as hero) {
+    <app-hero-detail [hero]="hero" />
+  }
 </div>

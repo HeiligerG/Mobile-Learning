@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { HeroesComponent } from './heroes/heroes.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { InfoComponent } from './info/info.component';
 import { MessagesComponent } from './messages/messages.component';
 
 interface ComponentItem {
@@ -27,9 +25,7 @@ type FilterType = 'all' | 'planned' | 'inProgress' | 'completed';
     CommonModule, 
     FormsModule,
     HeroesComponent,
-    HeroDetailComponent,
     MessagesComponent,
-    InfoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -38,6 +34,7 @@ export class AppComponent {
   
   readonly title = 'Angular Component Manager';
   
+  // Signals für reaktive Daten
   components = signal<ComponentItem[]>([
     {
       id: 1,
@@ -64,6 +61,7 @@ export class AppComponent {
   
   private nextId = signal(3);
 
+  // Computed Properties
   filteredComponents = computed(() => {
     const filter = this.currentFilter();
     const allComponents = this.components();
@@ -86,6 +84,7 @@ export class AppComponent {
     this.components().filter(c => c.status === 'planned').length
   );
 
+  // Component Management
   toggleComponentDisplay(component: ComponentItem): void {
     this.components.update(components => 
       components.map(c => ({
@@ -130,10 +129,12 @@ export class AppComponent {
     this.newComponentName.set('');
   }
 
+  // Filtering
   setFilter(filter: FilterType): void {
     this.currentFilter.set(filter);
   }
 
+  // Utilities
   trackByComponentId(index: number, component: ComponentItem): number {
     return component.id;
   }

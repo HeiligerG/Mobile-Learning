@@ -1,5 +1,4 @@
 <div class="app-container">
-  <!-- Header -->
   <header class="header">
     <nav class="nav">
       <div class="nav-brand">
@@ -8,14 +7,12 @@
       <div class="nav-actions">
         <a routerLink="/info">Info</a>
         <router-outlet></router-outlet>
-        <span class="component-counter">{{components.length}} Components</span>
+        <span class="component-counter">{{components().length}} Components</span>
       </div>
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main class="main">
-    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
         <h1 class="hero-title">Meine Angular Components</h1>
@@ -23,46 +20,43 @@
       </div>
     </section>
 
-    <!-- Components Section -->
     <section class="components-section">
       <div class="container">
-        <!-- Filter Tabs -->
         <div class="filter-tabs">
           <button 
             class="filter-tab" 
-            [class.active]="currentFilter === 'all'"
+            [class.active]="currentFilter() === 'all'"
             (click)="setFilter('all')"
           >
-            Alle ({{components.length}})
+            Alle ({{components().length}})
           </button>
           <button 
             class="filter-tab" 
-            [class.active]="currentFilter === 'completed'"
+            [class.active]="currentFilter() === 'completed'"
             (click)="setFilter('completed')"
           >
-            Fertig ({{getCompletedCount()}})
+            Fertig ({{completedCount()}})
           </button>
           <button 
             class="filter-tab" 
-            [class.active]="currentFilter === 'inProgress'"
+            [class.active]="currentFilter() === 'inProgress'"
             (click)="setFilter('inProgress')"
           >
-            In Arbeit ({{getInProgressCount()}})
+            In Arbeit ({{inProgressCount()}})
           </button>
           <button 
             class="filter-tab" 
-            [class.active]="currentFilter === 'planned'"
+            [class.active]="currentFilter() === 'planned'"
             (click)="setFilter('planned')"
           >
-            Geplant ({{getPlannedCount()}})
+            Geplant ({{plannedCount()}})
           </button>
         </div>
 
-        <!-- Components Grid -->
         <div class="components-grid">
           <div 
             class="component-card" 
-            *ngFor="let component of getFilteredComponents(); trackBy: trackByComponentId"
+            *ngFor="let component of filteredComponents(); trackBy: trackByComponentId"
             [class.status-completed]="component.status === 'completed'"
             [class.status-inProgress]="component.status === 'inProgress'"
             [class.status-planned]="component.status === 'planned'"
@@ -111,11 +105,8 @@
                 </button>
               </div>
               <div class="preview-content">
-                <!-- Hier werden die Components dynamisch angezeigt -->
                 <app-heroes *ngIf="component.selector === 'app-heroes'"></app-heroes>
-                <!-- Füge hier weitere Components hinzu -->
                 
-                <!-- Fallback für noch nicht implementierte Components -->
                 <div class="component-placeholder" *ngIf="!isComponentImplemented(component.selector)">
                   <div class="placeholder-icon">🚧</div>
                   <h4>{{component.name}}</h4>
@@ -127,7 +118,6 @@
           </div>
         </div>
 
-        <!-- Quick Add Component -->
         <div class="quick-add-section">
           <div class="quick-add-card">
             <h3>Neues Component hinzufügen</h3>
@@ -142,7 +132,7 @@
               <button 
                 class="btn btn-primary" 
                 (click)="addQuickComponent()"
-                [disabled]="!newComponentName.trim()"
+                [disabled]="!newComponentName().trim()"
               >
                 Hinzufügen
               </button>
@@ -154,7 +144,6 @@
     <app-messages></app-messages>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
