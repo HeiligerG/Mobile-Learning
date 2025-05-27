@@ -3,10 +3,12 @@ import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-messages',
-  imports: [ MessageService ],
+  imports: [],
   templateUrl: './messages.component.html',
-  styleUrl: './messages.component.scss'
+  styleUrl: './messages.component.scss',
+  standalone: true,
 })
+
 export class MessagesComponent {
-  public messageService = inject(MessageService);
+  messageService = inject(MessageService);
 }

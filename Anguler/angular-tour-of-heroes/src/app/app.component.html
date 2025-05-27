@@ -6,6 +6,8 @@
         <h1>{{title}}</h1>
       </div>
       <div class="nav-actions">
+        <a routerLink="/info">Info</a>
+        <router-outlet></router-outlet>
         <span class="component-counter">{{components.length}} Components</span>
       </div>
     </nav>
@@ -149,6 +151,7 @@
         </div>
       </div>
     </section>
+    <app-messages></app-messages>
   </main>
 
   <!-- Footer -->

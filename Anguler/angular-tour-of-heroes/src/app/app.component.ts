@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { InfoComponent } from './info/info.component';
+import { MessagesComponent } from './messages/messages.component';
+import { RouterOutlet } from '@angular/router';
 
 interface ComponentItem {
   id: number;
@@ -21,10 +23,13 @@ type FilterType = 'all' | 'planned' | 'inProgress' | 'completed';
   selector: 'app-root',
   standalone: true,
   imports: [
+    RouterOutlet,
     CommonModule, 
     FormsModule,
     HeroesComponent,
     HeroDetailComponent,
+    MessagesComponent,
+    InfoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
