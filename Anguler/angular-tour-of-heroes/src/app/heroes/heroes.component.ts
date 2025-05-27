@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {  } from '@angular/core';
 import { Hero } from '../hero';
-import { FormsModule } from '@angular/forms';
+import { MessageService } from '../message.service';
 import { HeroService } from '../hero.service';
+import { FormsModule } from '@angular/forms';
 import { UpperCasePipe } from '@angular/common';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 import { CommonModule } from '@angular/common';
@@ -28,7 +29,10 @@ export class HeroesComponent implements OnInit {
   };
   heroes: Hero[] = [];
 
+  selectedHero?: Hero;
+
   private heroService = inject(HeroService);
+  private messageService = inject(MessageService);
 
   getHeroes(): void {
     this.heroService.getHeroes()
@@ -38,8 +42,6 @@ export class HeroesComponent implements OnInit {
   ngOnInit(): void {
     this.getHeroes();
   }
-
-  selectedHero?: Hero;
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
